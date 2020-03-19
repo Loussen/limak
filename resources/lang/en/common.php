@@ -1,0 +1,35 @@
+<?php
+
+return [
+    'shops' => 'Stores',
+    'turkey' => 'Turkey',
+    'contact' => 'Contact us',
+    'message' => 'Message',
+    'contact_ways' => 'Contact ways',
+    'write_us' => 'Write us',
+    'address' => '113/117 Lermontov Street, Sabail District',
+    'name_surname' => 'Name, Surname',
+    'mail' => 'E-mail',
+    'phone' => 'Phone',
+    'text' => 'Text',
+    'send' => 'Send',
+    'success' => 'Message sent. We will contact you shortly.',
+    'no-content' => 'No content',
+    'logout' => 'Log out',
+    'cabinet' => 'My profile',
+    'login' => 'ENTER MY PROFILE',
+    'registration' => 'Registration',
+    'faq' => 'FAQ',
+    'rememberMe' => 'Remember me',
+    'forgotThePassword' => 'Forgot the password',
+    'log' => 'Log in',
+    'chat' => 'Start chat',
+    'questions' => 'Questions',
+    'rules' => 'Rules',
+    'save' => 'Save',
+    'support_center' => "SUPPORT <br> LINE",
+    'city_country' => 'Baku/Azerbaijan',
+
+    'usa' => 'USA',
+
+];

@@ -1,0 +1,41 @@
+<?php
+
+return [
+    'shops' => 'Mağazalar',
+    'turkey' => 'Türkiyə',
+    'contact' => 'Əlaqə',
+    'message' => 'Mesaj',
+    'contact_ways' => 'Əlaqə',
+    'write_us' => 'Bizə yazın',
+    'address' => 'Səbail rayonu, Lermontov küçəsi 113/117 <br />(İçərişəhər metrostansiyasının yaxınlığı, Dövlət İdarəçilik Akademiyasının yan girişi ilə üzbəüz )',
+    'address-sumgait' => ' Sumqayıt şəhəri, 36-cı məhəllə 7/11-5 (Asan xidmətin və yeni Avtovağzal dairəsinin yanı, Ştutqart avto ehtiyat hissələri mağazası ilə üzbəüz)',
+    'address-ganja' => 'Gəncə şəhəri, Dədə Qorqud küçəsi 33/1 (köhnə avtovağzalın yanı, N.Nərimanov parkı ilə üzbəüz)',
+    'address-zagatala' => 'Zaqatala şəhəri, Heydər Əliyev prospekti 145A (şəhər məscidi ilə üzbəüz)',
+    'address-lankaran' => ' Lənkəran şəhəri, Mir-Mustafaxan küçəsi, 32',
+    'name_surname' => 'Ad, Soyad',
+    'mail' => 'E-mail',
+    'phone' => 'Telefon',
+    'text' => 'Müraciət',
+    'send' => 'Göndər',
+    'success' => 'Mesajınız Göndərildi. Tezliklə sizinlə əlaqə saxlanılacaq.',
+    'no-content' => 'Məlumat yoxdur',
+    'logout' => 'Çıxış',
+    'cabinet' => 'Profilim',
+    'login' => 'PROFİLİMƏ GİRİŞ',
+    'registration' => 'Qeydiyyat',
+    'faq' => 'Tez-tez verilən suallar',
+    'rememberMe' => 'Məni xatırla',
+    'forgotThePassword' => 'Şifrəni unutmusunuz',
+    'log' => 'Daxil ol',
+    'chat' => 'Dialoqa başla',
+    'questions' => 'Suallar',
+    'rules' => 'Qaydalar',
+    'save' => 'Yadda saxla',
+    'support_center' => "DƏSTƏK <br> XƏTTİ",
+    'city_country' => 'Bakı/Azərbaycan',
+
+    'usa' => 'Amerika',
+    'america' => 'Amerika',
+
+
+ ];

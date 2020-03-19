@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a8a22da0-7e04-4bd1-a04e-2fdc1a5bbbec" name="Limak" url="http://173.212.251.130">
+        <fileTransfer host="173.212.251.130" port="52122" rootFolder="/limak/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="52122" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,41 @@
+<?php
+
+return [
+  'order' => 'ORDER',
+  'link' => 'LINK',
+  'url' => 'URL',
+  'price' => 'PRICE',
+  'cargoTR' => 'Cargo in Turkey',
+  'cargoUS' => 'Cargo in the US',
+  'total' => 'Total',
+  'shop' => 'Store',
+  'brand' => 'Brand',
+  'color' => 'Color',
+  'type' => 'Type',
+  'quantity' => 'Quantity',
+  'size' => 'Size',
+  'newRow' => 'New link',
+  'normalDelivery' => 'Normal delivery – free of charge during the day',
+  'normalDeliveryAddress' => 'Name, Surname',
+  'expressDelivery' => 'Express delivery - within 1 hour + $2',
+  'policy' => 'I accept distance sale terms',
+  'send' => 'Send',
+    'deliveryCargo' => 'Delivery fee',
+    'deliveryCargoHas' => 'Paid',
+    'deliveryCargoHasnt' => 'Unpaid',
+    'distantDeliverytitle' => 'Limak VM LLC distance sale agreement',
+    'distantDeliveryBody' => 'az',
+    'address_title' => 'Address title',
+    'address_line1' => 'Address line 1',
+    'district_city' => 'Province-City',
+    'ilche' => 'County',
+    'tax_center' => 'Tax center',
+    'district' => 'District',
+    'zip' => 'ZIP/Postal code',
+    'country' => 'Country',
+    'tr_passport' => 'TR passport',
+    'mobile' => 'Mobile phone',
+    'tax_num' => 'Tax number'
+
+
+];
