@@ -101,11 +101,11 @@ class InfoController extends Controller
         $country_tariffs_data = DB::table("country_tariffs")->select("id","country_id","region_id","price","label")->get();
         $country_tariffs_array = [];
 
-        
 
-      
+
+
         foreach ($country_tariffs_data as $ct){
-            $country_tariffs_array[$ct->country_id][$ct->region_id][] = ["label" => $tariff_names[$ct->label],"price" => $ct->price];  
+            $country_tariffs_array[$ct->country_id][$ct->region_id][] = ["label" => $tariff_names[$ct->label],"price" => $ct->price];
         }
 
 

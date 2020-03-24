@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:admin', 'namespace' => 'Cp'], function () {
     Route::get('/accounts', 'AccountController@index');
     Route::post('/accounts/add', 'AccountController@add');
     Route::get('/accounts/forOrderPayments', 'AccountController@forOrderPayments');
+    Route::post('/accounts/forOrderPayments', 'AccountController@forOrderPayments2');
     Route::get('/accounts/cash', 'CashController@show');
     Route::get('/accounts/logs/{log}', 'AccountController@list');
     Route::get('/accounts/logsAccount/{log}', 'AccountController@listAccount');
@@ -167,6 +168,7 @@ Route::group(['middleware' => 'auth:admin', 'namespace' => 'Cp'], function () {
     Route::get('admin/getRegions','AdminsController@getAdminRegions');
     Route::get('admin/getAdmins','AdminsController@getAdmins');
     Route::resource('/news', 'NewsController');
+    Route::resource('/questions', 'QuestionsController');
     Route::resource('/pages', 'PagesController');
 
     Route::get('/customs/manifest','CustomController@manifest');

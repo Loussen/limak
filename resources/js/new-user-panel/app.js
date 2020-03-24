@@ -49,6 +49,8 @@ import Order5 from  './components/Order5.vue'
 import Payment from  './components/Payment.vue'
 import Close from  './components/Close.vue'
 import testsorgu from  './components/testsorgu.vue'
+import testsorgu2 from  './components/testsorgu2.vue'
+import testsorgu3 from  './components/testsorgu3.vue'
 import Clients from './components/Clients.vue'
 import Chat from './components/Chat.vue'
 import Sifarisler from  './components/Sifarisler.vue'
@@ -128,6 +130,8 @@ const routes = [
             { path: '/chat', component: Chat },
             // { path: '/couriertest', component: couriertest },
             { path: '/testsorgu', component: testsorgu },
+            { path: '/testsorgu2', component: testsorgu2 },
+            { path: '/testsorgu3', component: testsorgu3 },
             { path: '/orders', component: Sifarisler },
 
         ],

@@ -133,6 +133,9 @@ Route::group([ 'middleware' => ['auth', 'isblocked'], 'namespace' => 'Front\Pane
     Route::get('/user-panel/get-courier-data2', 'CourierController@index2');
     Route::get('/user-panel/get-transfer-data', 'CourierController@indexTransfer');
     Route::get('/user-panel/get-complaints', 'QuestionsController@getComplaints');
+    Route::post('/user-panel/get-questions', 'QuestionsdController@getDefaultQuestions');
+    Route::post('/user-panel/get-question', 'QuestionsdController@getDefaultQuestion');
+    Route::get('/user-panel/get-max-step', 'QuestionsdController@getMaxStepQuestions');
 //    Route::get('user-panel/get-complaints1', 'QuestionsController@getComplaints1');
     Route::get('/user-panel/get-complaint-messages/{id}', 'QuestionsController@getComplaintMessages');
     Route::post('/user-panel/add-complaint', 'QuestionsController@addComplaint');

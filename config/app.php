@@ -53,7 +53,7 @@ return [
     */
 
     //'debug' => true, //true, //false,//$_SERVER['REMOTE_ADDR'] == '85.132.89.42',
-    'debug' => $_SERVER['HTTP_CF_CONNECTING_IP'] == '213.172.85.133'?true:false, //213.172.85.133
+    'debug' => $_SERVER['HTTP_CF_CONNECTING_IP'] == '158.181.40.232'?true:false, //213.172.85.133
 
     /*
     |--------------------------------------------------------------------------
