@@ -10,6 +10,14 @@
           <option name="port" value="52122" />
         </fileTransfer>
       </webServer>
+      <webServer id="4464a861-90e8-4db4-a1cb-c689edc2c579" name="E-tibb" url="http://178.128.247.181">
+        <fileTransfer host="178.128.247.181" port="22" rootFolder="/var/www/html/e-tibb" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

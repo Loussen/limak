@@ -532,6 +532,25 @@ class CustomController extends Controller
 
         \Artisan::call('cache:clear');
         \Artisan::call('view:clear');
+//        $invoice = DB::table('invoices as i')
+//            ->select('i.width', 'i.height', 'i.length', 'i.weight' , 'i.shipping_price','i.purchase_no','i.waybill','i.order_tracking_number','i.price',
+//                'u.uniqid','u.pin' ,'u.name', 'u.surname', 'u.address', 'u.serial_number','u.birthdate','u.id as user_id',
+//                'c.name as phone', 'p.quantity', 'p.shop_name', 'product_type_name','p.description',
+//                'cl.id as client_id','cl.name as client_name','cl.surname as client_surname','cl.serial_number as client_serial_number','cl.pin as client_pin','cl.phone as client_phone','cl.email as cl_email','cl.address as client_address',
+//                'pe.auto_id as person_id','pe.name as person_name','pe.surname as person_surname','pe.serial_number as person_serial_number','pe.pin as person_pin','pe.phone as person_phone','pe.email as person_email','pe.address as person_address'
+//            )
+//            ->leftJoin('users as u', 'i.user_id', '=', 'u.id')
+//            ->leftJoin('user_contacts as c', 'c.user_id', '=', 'u.id')
+//            ->leftJoin('products as p', 'i.product_id', '=', 'p.id')
+//            ->leftJoin('clients as cl', 'cl.id', '=', 'i.client_id')
+//            ->leftJoin('persons as pe', 'pe.id', '=', 'i.person_id')
+//            ->where('i.status_id', '=', 3)
+//            ->where('i.country_id', '=', 2)
+//            ->where('i.active', '=', 1)
+//            ->orderBy('u.name', 'ASC')
+//            ->orderBy('u.surname', 'ASC')
+//            ->get();
+
         $invoice = DB::table('invoices as i')
             ->select('i.width', 'i.height', 'i.length', 'i.weight' , 'i.shipping_price','i.purchase_no','i.waybill','i.order_tracking_number','i.price',
                 'u.uniqid','u.pin' ,'u.name', 'u.surname', 'u.address', 'u.serial_number','u.birthdate','u.id as user_id',
@@ -547,9 +566,20 @@ class CustomController extends Controller
             ->where('i.status_id', '=', 3)
             ->where('i.country_id', '=', 2)
             ->where('i.active', '=', 1)
+            ->whereIn('i.id', function($query)
+            {
+                $query->select('invoice_id')
+                    ->from('invoice_dates')
+                    ->where('action_date', '>', '2020-03-13 00:00')
+                    ->where('action_date', '<', '2020-03-13 23:59')
+                    ->where("status_id","=",3)
+                ;
+            })
             ->orderBy('u.name', 'ASC')
             ->orderBy('u.surname', 'ASC')
             ->get();
+
+//        SELECT count(id) FROM invoices where country_id=2 and status_id=3 and id in (select invoice_id from invoice_dates where status_id=3 and  action_date>'2020-03-13 00:00' and action_date<'2020-03-13 23:59')
 
         $data_users=[];
         foreach ($invoice as $item){

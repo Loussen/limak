@@ -140,6 +140,7 @@ Route::group(['middleware' => 'auth:admin', 'namespace' => 'Cp'], function () {
 
     Route::get('/courier/act/{id}','HomeController@act');
     Route::get('/courier/orders-waiting','CourierController@getCourierOrders');
+    Route::get('/courier/orders-waiting-new','CourierController@getCourierOrdersNew');
     Route::get('/courier/orders-print','CourierController@getCourierOrdersPrint');
     Route::get('/courier/getCourierData','CourierController@getCourierInvoicesData');
     Route::get('/courier/reject-order', 'CourierController@rejectOrder');
@@ -203,5 +204,11 @@ Route::group(['middleware' => 'auth:admin', 'namespace' => 'Cp'], function () {
     Route::get('/statistic/getShippingPricesUsa','StatisticController@getShippingPricesUsa');
 
 
+    // Questions
+    Route::get('/questionsList', 'QuestionsController2@getList');
+    Route::post('/questionsAdd', 'QuestionsController2@store');
+    Route::get('/questionsEdit/{id}', 'QuestionsController2@getQuestion');
+    Route::post('/questionsUpdate', 'QuestionsController2@update');
+    Route::delete('/questionsDelete/{id}', 'QuestionsController2@delete');
 
 });

@@ -143,6 +143,14 @@
                             </div>
                         </a>
                     </div>
+                    <div v-if="hasAccess(Array('super_admin'))" class="block-list col-md-3 col-sm-4 col-xs-12">
+                        <router-link to="/questions">
+                            <div class="block">
+                                <img src="/admin/new/img/suallar.png" alt="suallar">
+                                <p>Suallar (Processing...)</p>
+                            </div>
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </div>

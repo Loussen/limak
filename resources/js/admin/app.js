@@ -46,6 +46,9 @@ import Kuryer from './kuryer/KuryerIndexComponent';
 import KuryerPanel from './kuryer/KuryerPanelComponent';
 import KuryerCompleted from './kuryer/KuryerCompletedComponent';
 
+import KuryerNew from './kuryer/KuryerIndexNewComponent';
+import KuryerPanelNew from './kuryer/KuryerPanelNewComponent';
+import KuryerCompletedNew from './kuryer/KuryerCompletedNewComponent';
 
 import Transfer from './transfers/TransferIndexComponent';
 
@@ -86,6 +89,10 @@ import Cash2 from './account/Cash2Component'
 import Statistics from './statistics/StatisticsComponent'
 
 import moment from 'moment'
+
+import QuestionsList from './questions/QuestionsListComponent'
+import QuestionsAdd from './questions/QuestionsAddComponent'
+import QuestionsEdit from './questions/QuestionsEditComponent'
 
 const routes = [
     { path: '/accountant', component: Accountant },
@@ -143,9 +150,18 @@ const routes = [
 
     { path: '/transfer', component: Transfer },
     { path: '/courier', component: Kuryer },
-    { path: '/kuryer', component: Kuryer },
+
+    /*{ path: '/kuryer', component: Kuryer },
     { path: '/kuryer-panel', component: KuryerPanel },
-    { path: '/kuryer-completed', component: KuryerCompleted },
+    { path: '/kuryer-completed', component: KuryerCompleted },*/
+
+/*    { path: '/kuryer_new', component: KuryerNew },
+    { path: '/kuryer-panel_new', component: KuryerPanelNew },
+    { path: '/kuryer-completed_new', component: KuryerCompletedNew },*/
+    { path: '/kuryer', component: KuryerNew },
+    { path: '/kuryer-panel', component: KuryerPanelNew },
+    { path: '/kuryer-completed', component: KuryerCompletedNew },
+
     { path: '/courier-panel', component: CourierPanel },
 
     { path: '/accountant', component: Courier },
@@ -172,6 +188,10 @@ const routes = [
 
     { path: '/user-management', component: UserManagementAPI },
     { path: '/problems/solving/:id', component: Solving },
+
+    { path: '/questions', component: QuestionsList},
+    { path: '/questions/add', component: QuestionsAdd},
+    { path: '/questions/edit/:id', component: QuestionsEdit },
 
 ]
 

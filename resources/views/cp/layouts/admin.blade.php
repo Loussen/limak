@@ -81,7 +81,7 @@
                         <input class="transparent s-24 text-white b-0 font-weight-lighter w-128 height-50" type="text"
                                placeholder="start typing...">
                     </div>
-                    <a href="#" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-expanded="false"
+                    <a href="#" data-toggle="collapse" data-target="#navbarToggleExternalContent" arisa-expanded="false"
                        aria-label="Toggle navigation" class="paper-nav-toggle paper-nav-white active "><i></i></a>
                 </div>
             </div>
