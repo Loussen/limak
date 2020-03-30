@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 button-last text-left">
-                    <button type="button" class="btn-effect" v-on:click="submit()">Əlavə et</button>
+                    <button type="button" class="btn-effect" v-on:click="submit()">Dəyişdir</button>
                 </div>
             </div>
         </div>
