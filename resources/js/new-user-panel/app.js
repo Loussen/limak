@@ -28,6 +28,7 @@ import Balance_new from  './components/Balance_new.vue'
 import BalanceTl from  './components/BalanceTl.vue'
 import BalanceTl_new from  './components/BalanceTl_new.vue'
 import Courier from  './components/Courier.vue'
+import CourierNew from  './components/CourierNew.vue'
 import CourierPause from  './components/CourierPause.vue'
 import Courier1 from  './components/Courier1.vue'
 import Kuryer from  './components/Kuryer.vue'
@@ -51,6 +52,7 @@ import Close from  './components/Close.vue'
 import testsorgu from  './components/testsorgu.vue'
 import testsorgu2 from  './components/testsorgu2.vue'
 import testsorgu3 from  './components/testsorgu3.vue'
+import testsorgu4 from  './components/testsorgu4.vue'
 import Clients from './components/Clients.vue'
 import Chat from './components/Chat.vue'
 import Sifarisler from  './components/Sifarisler.vue'
@@ -121,6 +123,7 @@ const routes = [
             { path: '/balanceTl', component: BalanceTl },
             { path: '/balanceTl_new', component: BalanceTl_new },
             { path: '/courier', component: Courier },
+            { path: '/courier_new', component: CourierNew },
             { path: '/courier1', component: Courier1 },
             { path: '/kuryer', component: Kuryer },
             { path: '/clients', component: Clients },
@@ -132,6 +135,7 @@ const routes = [
             { path: '/testsorgu', component: testsorgu },
             { path: '/testsorgu2', component: testsorgu2 },
             { path: '/testsorgu3', component: testsorgu3 },
+            { path: '/testsorgu4', component: testsorgu4 },
             { path: '/orders', component: Sifarisler },
 
         ],
@@ -150,7 +154,7 @@ const routes = [
         path: '/orderY',
         component: Order
     },
-   /* {
+    /*{
         path: '/courier',
         component: CourierPause
     },*/

@@ -2,6 +2,7 @@
 
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('/password/reset2', '\App\Http\Controllers\Site\FrontController@passwordResetWithPhone');
 
 // CP Panel
 Route::group(['middleware' => 'auth:admin', 'namespace' => 'Admin'], function (){
@@ -116,6 +117,7 @@ Route::group([ 'middleware' => ['auth', 'isblocked'], 'namespace' => 'Front\Pane
     //Route::get('/user-panel/track', 'TrackController@index');
     Route::get('/user-panel/get-countries', 'InvoicesController@countries');
     Route::get('/user-panel/get-invoices/{type}', 'InvoicesController@index');
+    Route::get('/user-panel/home_courier_invoices', 'InvoicesController@homeForCourier');
     Route::get('/user-panel/get-invoices2/{type}', 'InvoicesController@index2');
     Route::get('/user-panel/get-invoices-count', 'InvoicesController@invoiceCount');
     Route::get('/user-panel/get-allInvoices-count', 'InvoicesController@allInvoicesCount');
@@ -133,9 +135,18 @@ Route::group([ 'middleware' => ['auth', 'isblocked'], 'namespace' => 'Front\Pane
     Route::get('/user-panel/get-courier-data2', 'CourierController@index2');
     Route::get('/user-panel/get-transfer-data', 'CourierController@indexTransfer');
     Route::get('/user-panel/get-complaints', 'QuestionsController@getComplaints');
-    Route::post('/user-panel/get-questions', 'QuestionsdController@getDefaultQuestions');
-    Route::post('/user-panel/get-question', 'QuestionsdController@getDefaultQuestion');
-    Route::get('/user-panel/get-max-step', 'QuestionsdController@getMaxStepQuestions');
+    Route::get('/user-panel/get-complaints', 'QuestionsController@getComplaints');
+
+    // Asistant
+//    Route::post('/user-panel/get-questions', 'QuestionsdController@getDefaultQuestions');
+//    Route::post('/user-panel/get-question', 'QuestionsdController@getDefaultQuestion');
+//    Route::get('/user-panel/get-max-step', 'QuestionsdController@getMaxStepQuestions');
+
+    Route::post('/user-panel/get-questions', 'QuestionsddController@getDefaultQuestions');
+    Route::post('/user-panel/get-question', 'QuestionsddController@getDefaultQuestion');
+    Route::get('/user-panel/get-max-step', 'QuestionsddController@getMaxStepQuestions');
+
+
 //    Route::get('user-panel/get-complaints1', 'QuestionsController@getComplaints1');
     Route::get('/user-panel/get-complaint-messages/{id}', 'QuestionsController@getComplaintMessages');
     Route::post('/user-panel/add-complaint', 'QuestionsController@addComplaint');

@@ -8,8 +8,8 @@
                         <div class="questions">
                             <span v-if="waitData === true" class="question-bubble"
                                   v-for="(item,index) in questions[n]"
-                                  v-on:click="setActiveQuestions(index,item, n)"
-                                  :class="{ active:isActiveQuestion(index, n) }"
+                                  v-on:click="setActiveQuestions(index,item)"
+                                  :class="{ active:isActiveQuestion(index) }"
                             >{{item.value}}</span>
 
                             <div v-if="k <= maxStep">
@@ -252,7 +252,7 @@
                 selectedQuestion: [],
                 selectedAnswer: [],
                 lang: null,
-                k: 0,
+                k: 1,
                 maxStep: 1,
                 showAcceptArr: [],
                 nope: [],
@@ -264,8 +264,8 @@
             initialize() {
                 this.lang = window.translator;
             },
-            isActiveQuestion: function (menuItem, step) {
-                return this.activeItemQuestion[step] === menuItem;
+            isActiveQuestion: function (menuItem) {
+                return this.activeItemQuestion[this.k] === menuItem;
             },
             isActive: function (menuItem, step) {
                 return this.activeItem === menuItem;
@@ -281,41 +281,50 @@
                     });
                 this.activeItem = menuItem
             },
-            setActiveQuestions: function (menuItem, item, step) {
-                if(this.showAcceptArr[step])
+            setActiveQuestions: function (menuItem, item) {
+                if(this.showAcceptArr[this.k] || 1==1)
                 {
                     console.log("Active Questions");
                     console.log(this.showAcceptArr);
-                    axios.post(`/user-panel/get-question/`, {lang: default_locale, step: step, id: item.id})
+                    axios.post(`/user-panel/get-question/`, {lang: default_locale, step: this.k, id: item.id})
                         .then(data => {
                             console.log("1 k = "+this.k);
                             this.question = data.data.data;
                             let checkChild = data.data.checkChild;
+
+                            let stepChild = 1;
+                            this.$set(this.selectedQuestion, this.k,item.value);
+                            ++this.k;
+
                             if(checkChild && checkChild.id > 0)
                             {
                                 console.log("Parentssssss");
-                                let stepChild = 1;
+
                                 if(this.k > 1)
                                     stepChild = this.k-1;
                                 else
                                 {
                                     stepChild = this.k;
-                                    this.k++;
+                                    // this.k++;
                                 }
 
-                                this.getDefaultQuestions(stepChild,item.id);
+
                                 console.log("2 k = "+this.k);
                             }
                             else
                             {
-                                this.$set(this.selectedAnswer, step,item.answer);
+                                this.$set(this.selectedAnswer, this.k,item.answer);
                             }
 
-                            this.$set(this.selectedQuestion, step,item.value);
-                            this.$set(this.nope, step,false);
+
+                            this.getDefaultQuestions(1,item.id);
+
+
+
+                            this.$set(this.nope, this.k,false);
 
                         });
-                    this.activeItemQuestion[step] = menuItem;
+                    // this.activeItemQuestion[step] = menuItem;
                 }
             },
             showAccept: function(step) {
@@ -462,18 +471,18 @@
                 if(success === true)
                     this.success = true;
 
-                if(this.k < this.maxStep && this.success === false && this.failed === false)
+                if(/*this.k <= this.maxStep &&*/ this.success === false && this.failed === false)
                 {
                     await axios.post('/user-panel/get-questions/', {lang: default_locale, step: step, p_id: p_id})
                         .then(data => {
                             console.log("Stepppp"+step);
-                            this.questions[step] = data.data.data;
-                            this.k++;
+                            this.questions[this.k] = data.data.data;
+                            // this.k++;
 
                             this.showAccept(step-1);
                             this.showNope(step-1);
                             console.log("Default Questions2");
-                            console.log(this.showAcceptArr);
+                            console.log("First k = "+this.k);
                         })
                         .catch(err => {
                             console.log(err);
