@@ -2,7 +2,7 @@
     <div class="col-md-9 col-sm-11 col-xs-11 offer courier">
         <div class="row">
             <div class="col-xs-12 courier-log">
-                <div class="block col-xs-12 questions-request">
+                <div class="block col-xs-12 questions-request" id="assistant-manager">
                     <h3>{{ ExWindow && ExWindow.translator('panel-errors.requests') }}</h3>
                     <div class="answer-questions" v-for="n in k" >
                         <div class="questions">
@@ -12,13 +12,9 @@
                                   :class="{ active:isActiveQuestion(index) }"
                             >{{item.value}}</span>
 
-                            <div v-if="k <= maxStep">
-                                <hr v-if="!nope[n] && !selectedAnswer[n]" />
-
-                                <div v-if="nope[n]">
-                                    <span class="nope" v-on:click="getDefaultQuestions(n+1)"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>
-
-                                    <hr v-if="nope[n] && !selectedAnswer[n]" />
+                            <div v-if="n < maxStep && existChild[n] > 0 || n==1">
+                                <div>
+                                    <span class="nope" v-on:click="getDefaultQuestions(n+1,0,true)"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>
                                 </div>
                             </div>
 
@@ -48,9 +44,6 @@
                                         <span class="no" v-on:click="getDefaultQuestions(n+1,false)"><span style="font-size: 15px; margin-right: 5px;">&#128543;</span> Xeyr</span>
                                     </div>
                                 </div>
-                                <hr v-if="n >= 1 && selectedAnswer[n]" />
-
-
                             </div>
                         </div>
 
@@ -251,6 +244,7 @@
                 // showAnswer: false,
                 selectedQuestion: [],
                 selectedAnswer: [],
+                existChild: [],
                 lang: null,
                 k: 1,
                 maxStep: 1,
@@ -314,6 +308,7 @@
                             else
                             {
                                 this.$set(this.selectedAnswer, this.k,item.answer);
+                                this.$set(this.nope, this.k,false);
                             }
 
 
@@ -321,7 +316,8 @@
 
 
 
-                            this.$set(this.nope, this.k,false);
+                            let objDiv = document.getElementById("assistant-manager");
+                            objDiv.scrollTop = objDiv.scrollHeight + 500;
 
                         });
                     // this.activeItemQuestion[step] = menuItem;
@@ -466,18 +462,30 @@
                         this.complaint_reasons_arr[key]
                 )
             },
-            async getDefaultQuestions(step,p_id=0,success=false) {
+            async getDefaultQuestions(step,p_id=0,otherQuestions=false) {
 
-                if(success === true)
-                    this.success = true;
-
-                if(/*this.k <= this.maxStep &&*/ this.success === false && this.failed === false)
+                if(/*this.k <= this.maxStep &&*/ this.success === false && this.failed === false || 1==1)
                 {
                     await axios.post('/user-panel/get-questions/', {lang: default_locale, step: step, p_id: p_id})
                         .then(data => {
                             console.log("Stepppp"+step);
-                            this.questions[this.k] = data.data.data;
-                            // this.k++;
+                            console.log(this.existChild);
+
+                            if(otherQuestions === true)
+                            {
+                                this.$set(this.selectedQuestion, this.k,'Diger');
+                                this.questions[this.k+1] = data.data.data;
+                                this.$set(this.existChild, this.k-1,this.k-1);
+                            }
+                            else
+                            {
+                                this.questions[this.k] = data.data.data;
+                            }
+
+                            console.log(this.existChild);
+
+
+                            this.k++;
 
                             this.showAccept(step-1);
                             this.showNope(step-1);
@@ -604,6 +612,9 @@
     .questions-request{
         max-height: 650px;
         overflow: auto;
+    }
+    .questions{
+        margin-top: 10px;
     }
 
 

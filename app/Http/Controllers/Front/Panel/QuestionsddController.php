@@ -28,7 +28,7 @@ class QuestionsddController extends Controller
             ->where('q.step',$step)
             ->where('q.p_id',$p_id)
             ->where('qt.locale',$lang)
-            ->orderBy('qt.ordering', 'ASC')
+            ->orderBy('q.ordering', 'ASC')
             ->get();
 
 //        $data = Questions::with('translates')->where('status','1')->where('locale','=','ru')->get();
