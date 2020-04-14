@@ -46,7 +46,9 @@ import Kuryer from './kuryer/KuryerIndexComponent';
 import KuryerPanel from './kuryer/KuryerPanelComponent';
 import KuryerCompleted from './kuryer/KuryerCompletedComponent';
 
+import KuryerDashboatd from './kuryer/KuryerDashboardComponent';
 import KuryerNew from './kuryer/KuryerIndexNewComponent';
+import KuryerBasketNew from './kuryer/KuryerBasketNewComponent';
 import KuryerPanelNew from './kuryer/KuryerPanelNewComponent';
 import KuryerCompletedNew from './kuryer/KuryerCompletedNewComponent';
 
@@ -84,6 +86,8 @@ import OrdersStatistic from './statistics/OrdersStatisticComponent'
 
 import UserManagementAPI from './user-management/UserManagementComponent'
 
+import AsistantManagement from './asistant-management/AsistantManagementComponent'
+
 import Cash2 from './account/Cash2Component'
 
 import Statistics from './statistics/StatisticsComponent'
@@ -93,6 +97,9 @@ import moment from 'moment'
 import QuestionsList from './questions/QuestionsListComponent'
 import QuestionsAdd from './questions/QuestionsAddComponent'
 import QuestionsEdit from './questions/QuestionsEditComponent'
+import QuestionsTitleList from './questions_title/QuestionsTitleListComponent'
+import QuestionsTitleAdd from './questions_title/QuestionsTitleAddComponent'
+import QuestionsTitleEdit from './questions_title/QuestionsTitleEditComponent'
 
 const routes = [
     { path: '/accountant', component: Accountant },
@@ -158,9 +165,12 @@ const routes = [
 /*    { path: '/kuryer_new', component: KuryerNew },
     { path: '/kuryer-panel_new', component: KuryerPanelNew },
     { path: '/kuryer-completed_new', component: KuryerCompletedNew },*/
-    { path: '/kuryer', component: KuryerNew },
-    { path: '/kuryer-panel', component: KuryerPanelNew },
-    { path: '/kuryer-completed', component: KuryerCompletedNew },
+
+    { path: '/kuryer', component: KuryerDashboatd },
+    { path: '/kuryer-index/:id', component: KuryerNew },
+    { path: '/kuryer-basket/:id', component: KuryerBasketNew },
+    { path: '/kuryer-panel/:id', component: KuryerPanelNew },
+    { path: '/kuryer-completed/:id', component: KuryerCompletedNew },
 
     { path: '/courier-panel', component: CourierPanel },
 
@@ -192,6 +202,10 @@ const routes = [
     { path: '/questions', component: QuestionsList},
     { path: '/questions/add', component: QuestionsAdd},
     { path: '/questions/edit/:id', component: QuestionsEdit },
+    { path: '/questions_title', component: QuestionsTitleList},
+    { path: '/questions_title/add', component: QuestionsTitleAdd},
+    { path: '/questions_title/edit/:id', component: QuestionsTitleEdit },
+    { path: '/asistant-management', component: AsistantManagement },
 
 ]
 

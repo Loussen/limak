@@ -128,6 +128,27 @@ class QuestionsController2 extends Controller
 
     }
 
+    public function getParentQuestions ()
+    {
+        $data = DB::table('questions as q')
+            ->select('*')
+            ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
+//            ->where('qt.answer','=', '')
+            ->where('qt.locale','az')
+            ->where('q.status','1')
+            ->get();
+
+//        var_dump($data); exit;
+
+        if($data) {
+            return response()->json([
+                'status' => 200,
+                'data' => $data
+            ]);
+        }
+
+    }
+
     public function delete($id)
     {
         DB::delete('delete from questions where id = ?',[$id]);

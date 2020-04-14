@@ -96,7 +96,7 @@
                         </router-link>
                     </div>
                     <div v-if="hasAccess(Array('casher'))" class="block-list col-md-3 col-sm-4 col-xs-12">
-                        <router-link to="/kuryer-completed">
+                        <router-link to="/kuryer-completed/1">
                             <div class="block">
                                 <img src="/admin/new/img/kuryer.png" alt="kuryer">
                                 <p>KURYER</p>
@@ -136,18 +136,18 @@
                         </router-link>
                     </div>
 <!--                    <div v-if="hasAccess(Array('super_admin'))" class="block-list col-md-3 col-sm-4 col-xs-12">-->
-<!--                        <a href="/cp/questions">-->
+<!--                        <router-link to="/questions">-->
 <!--                            <div class="block">-->
 <!--                                <img src="/admin/new/img/suallar.png" alt="suallar">-->
 <!--                                <p>Suallar</p>-->
 <!--                            </div>-->
-<!--                        </a>-->
+<!--                        </router-link>-->
 <!--                    </div>-->
                     <div v-if="hasAccess(Array('super_admin'))" class="block-list col-md-3 col-sm-4 col-xs-12">
-                        <router-link to="/questions">
+                        <router-link to="/asistant-management">
                             <div class="block">
-                                <img src="/admin/new/img/suallar.png" alt="suallar">
-                                <p>Suallar</p>
+                                <img src="/admin/new/img/asistant.png" alt="asistant">
+                                <p>Limak Asistant</p>
                             </div>
                         </router-link>
                     </div>

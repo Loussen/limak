@@ -6,13 +6,13 @@
                 <ol class="breadcrumb">
                     <li><router-link to="/"><i class="fa fa-home"></i>Ana səhifə</router-link></li>
                     <li><router-link to="/asistant-management"><i class="fa fa-user"></i>Limak Asistant</router-link></li>
-                    <li class="active">Suallar</li>
+                    <li class="active">Sual Başlıqları</li>
                 </ol>
             </div>
         </div>
         <div class="col-md-12">
             <div class="top-menu">
-                <router-link class="btn btn-primary btn-lg active" to="/questions/add"><i class="fa fa-plus"></i> Əlavə et</router-link>
+                <router-link class="btn btn-primary btn-lg active" to="/questions_title/add"><i class="fa fa-plus"></i> Əlavə et</router-link>
             </div>
         </div>
         <br />
@@ -22,29 +22,27 @@
                     <thead>
                     <tr>
                         <th v-bind="count_i=0">ID</th>
-                        <th>Sual</th>
-                        <th>Cavab</th>
-                        <th>Step</th>
+                        <th>Başlıq (AZ)</th>
+                        <th>Başlıq (RU)</th>
                         <th>Əlavə edilmə tarixi</th>
                         <th>Redaktə</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="questions in list">
+                    <tr v-for="questions_title in list">
 
                         <td>{{count_i = count_i+1}}</td>
-                        <td> {{ questions.value }}</td>
-                        <td v-html="questions.answer"></td>
-                        <td> {{ questions.step }}</td>
-                        <td> {{questions.created_at | formatDate}}</td>
+                        <td> {{ questions_title.name_az }}</td>
+                        <td> {{ questions_title.name_ru }}</td>
+                        <td> {{questions_title.created_at | formatDate}}</td>
                         <td>
 <!--                            <a href="#" class="btn btn-primary a-btn-slide-text">-->
 <!--                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>-->
 <!--                            </a>-->
-                            <router-link class="btn btn-primary a-btn-slide-text" v-bind:to="'/questions/edit/'+questions.questions_id">
+                            <router-link class="btn btn-primary a-btn-slide-text" v-bind:to="'/questions_title/edit/'+questions_title.id">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             </router-link>
-                            <a @click.prevent="deleteQuestion(questions.questions_id)" href="#" class="btn btn-danger">
+                            <a @click.prevent="deleteQuestion(questions_title.id)" href="#" class="btn btn-danger">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </a>
                         </td>
@@ -99,7 +97,7 @@
         console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
     }
     export default {
-        name: "QuestionsList",
+        name: "QuestionsTitleList",
         data () {
             return {
                 isHidden: true,
@@ -109,7 +107,7 @@
         },
         methods:{
             getData(page_id){
-                axios.get('/cp/questionsList?page='+page_id)
+                axios.get('/cp/questionsTitleList?page='+page_id)
                     .then((response) => {
                         this.list = response.data.data.data;
                         this.paginate = response.data.data;
@@ -129,7 +127,7 @@
                     cancelButtonText: 'Xeyr'
                 }).then((result) => {
                     if (result.value) {
-                        axios.delete('/cp/questionsDelete/'+question_id).then((response) => {
+                        axios.delete('/cp/questionsTitleDelete/'+question_id).then((response) => {
                             if(response.data.data === true)
                             {
                                 swal.fire(

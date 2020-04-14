@@ -21,6 +21,17 @@
                         <a class="nav-link" :class="lang === 'ru' ? 'active' : ''" @click="lang = 'ru'">RU</a>
                     </li>
                 </ul>
+<!--                <div class="col-md-12">-->
+<!--                    <div class="form-group">-->
+<!--                        <select v-model="selected_type">-->
+<!--                            <option disabled value="">Sualın tipini seçin...</option>-->
+<!--                            <option value="1">Ancaq sual</option>-->
+<!--                            <option value="2">Sual və cavab</option>-->
+<!--                        </select>-->
+<!--                        <span>Selected: {{ selected_type }}</span>-->
+<!--                        <p style="color:red;" v-if="errors[3]">{{errors[3].selected_type}}</p>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <template v-if="lang === 'az'">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -28,7 +39,7 @@
                             <p style="color:red;" v-if="errors[0]">{{errors[0].question_az}}</p>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if="selected_type != 1">
                         <div class="form-group">
     <!--                        <input type="text" class="form-control" placeholder="Cavab" v-model="answer">-->
                             <vue-ckeditor
@@ -46,7 +57,7 @@
                             <p style="color:red;" v-if="errors[0]">{{errors[0].question_ru}}</p>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if="selected_type != 1">
                         <div class="form-group">
                             <!--                        <input type="text" class="form-control" placeholder="Cavab" v-model="answer">-->
                             <vue-ckeditor
@@ -95,7 +106,9 @@
                 answer_az: null,
                 answer_ru: null,
                 step: 1,
+                selected_type: '',
                 errors: [],
+                parentList: [],
                 config: {
                     height: 300
                 },
@@ -143,13 +156,24 @@
             checkForm(){
                 this.errors=[];
                 if(!this.question_az) this.errors[0]={question_az:"Sual boş ola bilməz."};
-                if(!this.answer_az) this.errors[1]={answer_az:"Cavab boş ola bilməz."};
+                // if(!this.answer_az) this.errors[1]={answer_az:"Cavab boş ola bilməz."};
                 if(this.step <= 0) this.errors[2]={step:"Step boş ola bilməz."};
+                // if(this.selected_type <= 0) this.errors[3]={selected_type:"Tip boş ola bilməz."};
                 return (this.errors.length===0 ? 'true' : 'false');
             },
+            getData(){
+                axios.get(`/cp/questionsParents`)
+                    .then((response) => {
+                        this.parentList = response.data.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
 
         },
         mounted(){
+            this.getData();
             if (document.getElementById('ckeditor')) return; // was already loaded
             console.log("ckeditor");
             let scriptTag = document.createElement("script");
