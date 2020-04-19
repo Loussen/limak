@@ -6,11 +6,16 @@
                     <h3>{{ ExWindow && ExWindow.translator('panel-errors.requests') }}</h3>
                     <div class="answer-questions" v-for="n in k" >
                         <div class="questions">
-                            <span v-if="waitData === true" class="question-bubble"
-                                  v-for="(item,index) in questions[n]"
-                                  v-on:click="setActiveQuestions(index,item)"
-                                  :class="{ active:isActiveQuestion(index) }"
-                            >{{item.value}}</span>
+                            {{n}}
+                            <div class="question-bubble-title" v-if="existTitle[n] === true">{{questions[n][0].title_name}}</div>
+                            <div>
+                                <span class="question-bubble"
+                                      v-for="(item,index) in questions[n-1]"
+                                      v-on:click="setActiveQuestions(index,item)"
+                                      :class="{ active:isActiveQuestion(index) }"
+                                >{{item.value}}</span>
+                            </div>
+
 
                             <div v-if="n < maxStep && existChild[n] > 0 || n==1">
                                 <div>
@@ -23,9 +28,9 @@
                         <div>
 
                             <div>
-                                <div class="question" v-if="selectedQuestion[n]">
+                                <div class="question" v-if="selectedQuestion[n-1]">
                                     <span class="selected-question">
-                                        {{selectedQuestion[n]}}
+                                        {{selectedQuestion[n-1]}}
                                     </span>
                                 </div>
 
@@ -219,6 +224,7 @@
                 complaint_reasons_arr: [],
                 complaints: [],
                 questions: [],
+                existTitle: [],
                 question: [],
                 answers: [],
                 errors: [],
@@ -482,8 +488,17 @@
                                 this.questions[this.k] = data.data.data;
                             }
 
-                            console.log(this.existChild);
+                            // console.log(this.questions[this.k][0].title.name+"qqqq");
 
+                            this.existTitle[this.k] = false;
+                            if(this.questions[this.k][0].title_name)
+                            {
+                                this.existTitle[this.k] = true;
+                            }
+
+                            console.log(this.existChild);
+                            console.log(this.questions[this.k][0].title_name+this.k+"sasa");
+                            console.log(this.questions[this.k][1].title_name+this.k+"sasaqq");
 
                             this.k++;
 
@@ -536,7 +551,11 @@
     .quiz-left {
         cursor: pointer;
     }
-    .question-bubble{
+    .question-bubble-title
+    {
+        cursor: initial !important;
+    }
+    .question-bubble, .question-bubble-title{
         border-radius: 20px;
         border: 1px solid #ddd;
         padding: 10px 30px;

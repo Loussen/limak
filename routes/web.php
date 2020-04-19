@@ -142,9 +142,13 @@ Route::group([ 'middleware' => ['auth', 'isblocked'], 'namespace' => 'Front\Pane
 //    Route::post('/user-panel/get-question', 'QuestionsdController@getDefaultQuestion');
 //    Route::get('/user-panel/get-max-step', 'QuestionsdController@getMaxStepQuestions');
 
-    Route::post('/user-panel/get-questions', 'QuestionsddController@getDefaultQuestions');
-    Route::post('/user-panel/get-question', 'QuestionsddController@getDefaultQuestion');
-    Route::get('/user-panel/get-max-step', 'QuestionsddController@getMaxStepQuestions');
+//    Route::post('/user-panel/get-questions', 'QuestionsddController@getDefaultQuestions');
+//    Route::post('/user-panel/get-question', 'QuestionsddController@getDefaultQuestion');
+//    Route::get('/user-panel/get-max-step', 'QuestionsddController@getMaxStepQuestions');
+
+    Route::post('/user-panel/get-questions', 'QuestionsdddController@getDefaultQuestions');
+    Route::post('/user-panel/get-question', 'QuestionsdddController@getDefaultQuestion');
+    Route::get('/user-panel/get-max-step', 'QuestionsdddController@getMaxStepQuestions');
 
 
 //    Route::get('user-panel/get-complaints1', 'QuestionsController@getComplaints1');

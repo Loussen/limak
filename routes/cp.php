@@ -210,7 +210,8 @@ Route::group(['middleware' => 'auth:admin', 'namespace' => 'Cp'], function () {
     Route::get('/questionsEdit/{id}', 'QuestionsController2@getQuestion');
     Route::post('/questionsUpdate', 'QuestionsController2@update');
     Route::delete('/questionsDelete/{id}', 'QuestionsController2@delete');
-    Route::get('/questionsParents', 'QuestionsController2@getParentQuestions');
+    Route::get('/questionsParents/{id}', 'QuestionsController2@getParentQuestions');
+    Route::get('/questionsTitles', 'QuestionsController2@getTitlesQuestions');
 
     Route::get('/questionsTitleList', 'QuestionsTitleController@getList');
     Route::post('/questionsTitleAdd', 'QuestionsTitleController@store');

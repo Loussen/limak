@@ -102,8 +102,6 @@
                                 'error'
                             )
                         }
-                        console.log(data)
-                        // this.getComplaints();
                     })
                 }
             },

@@ -53,6 +53,7 @@ import testsorgu from  './components/testsorgu.vue'
 import testsorgu2 from  './components/testsorgu2.vue'
 import testsorgu3 from  './components/testsorgu3.vue'
 import testsorgu4 from  './components/testsorgu4.vue'
+import testsorgu5 from  './components/testsorgu5.vue'
 import Clients from './components/Clients.vue'
 import Chat from './components/Chat.vue'
 import Sifarisler from  './components/Sifarisler.vue'
@@ -136,6 +137,7 @@ const routes = [
             { path: '/testsorgu2', component: testsorgu2 },
             { path: '/testsorgu3', component: testsorgu3 },
             { path: '/testsorgu4', component: testsorgu4 },
+            { path: '/testsorgu5', component: testsorgu5 },
             { path: '/orders', component: Sifarisler },
 
         ],

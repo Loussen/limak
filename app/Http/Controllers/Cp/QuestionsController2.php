@@ -19,8 +19,17 @@ class QuestionsController2 extends Controller
     {
         $per_page = 5;
         $data = DB::table('questions as q')
-            ->select('*')
+            ->select('*','qpt.value as p_value','q.step as q_step')
+            ->leftJoin('questions as p', function ($join) {
+                $join->on('p.id', '=', 'q.p_id');
+                $join->leftJoin('questions_translates as qpt','p.id','=','qpt.questions_id');
+                $join->where('qpt.locale','az');
+            })
+
+//            ->leftJoin('questions as p','p.id','=','q.p_id')
+//            ->leftJoin('questions_translates as qpt','p.id','=','qpt.questions_id')
             ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
+            ->leftJoin('questions_titles as q_titles','q.title_id','=','q_titles.id')
             ->where('qt.locale','az')
             ->orderBy('q.id', 'ASC')
             ->paginate($per_page);
@@ -47,6 +56,9 @@ class QuestionsController2 extends Controller
         $model = new Questions();
         $step = $request->step;
         $model->step = $step;
+        $model->p_id = $request->parent;
+        $model->title_id = $request->title_id;
+        $model->type = $request->type;
         $model->save();
 
         // AZ
@@ -87,6 +99,9 @@ class QuestionsController2 extends Controller
         $findQuestion = Questions::findOrFail((int)$request->question_id);
         $step = $request->step;
         $findQuestion->step = $step;
+        $findQuestion->p_id = $request->parent;
+        $findQuestion->title_id = $request->title_id;
+        $findQuestion->type = $request->type;
         $findQuestion->updated_at = date("Y-m-d H:i:s");
         $findQuestion->update();
 
@@ -128,14 +143,16 @@ class QuestionsController2 extends Controller
 
     }
 
-    public function getParentQuestions ()
+    public function getParentQuestions ($id)
     {
         $data = DB::table('questions as q')
             ->select('*')
             ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
 //            ->where('qt.answer','=', '')
             ->where('qt.locale','az')
+            ->where('q.id','!=',$id)
             ->where('q.status','1')
+            ->orderBy('q.id', 'DESC')
             ->get();
 
 //        var_dump($data); exit;
@@ -147,6 +164,21 @@ class QuestionsController2 extends Controller
             ]);
         }
 
+    }
+
+    public function getTitlesQuestions ()
+    {
+        $data = DB::table('questions_titles')
+            ->select('*')
+            ->where('status','1')
+            ->get();
+
+        if($data) {
+            return response()->json([
+                'status' => 200,
+                'data' => $data
+            ]);
+        }
     }
 
     public function delete($id)

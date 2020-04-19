@@ -22,8 +22,9 @@ class QuestionsddController extends Controller
         $p_id = $request->post("p_id");
 
         $data = DB::table('questions as q')
-            ->select('qt.value','qt.answer','qt.questions_id','q.id')
+            ->select('qt.value','qt.answer','qt.questions_id','q.id as q_id','titles.name_'.$lang.' as title_name')
             ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
+            ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
             ->where('q.status','1')
             ->where('q.step',$step)
             ->where('q.p_id',$p_id)

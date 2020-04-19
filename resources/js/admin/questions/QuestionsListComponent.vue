@@ -24,8 +24,9 @@
                         <th v-bind="count_i=0">ID</th>
                         <th>Sual</th>
                         <th>Cavab</th>
+                        <th>Ana sual</th>
+                        <th>Başlıq</th>
                         <th>Step</th>
-                        <th>Əlavə edilmə tarixi</th>
                         <th>Redaktə</th>
                     </tr>
                     </thead>
@@ -35,8 +36,9 @@
                         <td>{{count_i = count_i+1}}</td>
                         <td> {{ questions.value }}</td>
                         <td v-html="questions.answer"></td>
-                        <td> {{ questions.step }}</td>
-                        <td> {{questions.created_at | formatDate}}</td>
+                        <td v-html="questions.p_value"></td>
+                        <td v-html="questions.name_az"></td>
+                        <td> {{ questions.q_step }}</td>
                         <td>
 <!--                            <a href="#" class="btn btn-primary a-btn-slide-text">-->
 <!--                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>-->
