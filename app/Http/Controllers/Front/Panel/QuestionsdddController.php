@@ -16,7 +16,7 @@ class QuestionsdddController extends Controller
         $step = $request->post("step");
         $id = $request->post("id");
 
-        $checkChildQuestions = null;
+        $checkChildQuestions = $checkOther = null;
         if($id > 0)
         {
             $checkChildQuestions = DB::table('questions as q')
@@ -60,15 +60,18 @@ class QuestionsdddController extends Controller
                 ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
                 ->where('q.status','1')
                 ->where('q.step',$step)
-                ->where('q.p_id',$id)
+                ->where('q.p_id',0)
                 ->where('qt.locale',$lang)
                 ->orderBy('q.ordering', 'ASC')
                 ->get();
+
+            $checkOther = true;
         }
 
         return response()->json([
             'data' => $data,
-            'checkChild' => $checkChildQuestions
+            'checkChild' => $checkChildQuestions,
+            'checkOther' => $checkOther
         ]);
     }
 
@@ -105,7 +108,7 @@ class QuestionsdddController extends Controller
         ]);
     }
 
-    public function getMaxStepQuestions()
+    public function getMaxStepQuestions(Request $request)
     {
         $stepDesc = Questions::where('p_id',0)->orderBy('step', 'desc')->first(); // gets the whole row
         $maxStep = $stepDesc->step;
@@ -114,4 +117,16 @@ class QuestionsdddController extends Controller
             'data' => $maxStep,
         ]);
     }
+
+//    public function getNextStepQuestions(Request $request)
+//    {
+//        $step = $request->post("step");
+//
+//        $stepDesc = Questions::where('p_id',0)->orderBy('step', 'desc')->first(); // gets the whole row
+//        $maxStep = $stepDesc->step;
+//
+//        return response()->json([
+//            'data' => $maxStep,
+//        ]);
+//    }
 }

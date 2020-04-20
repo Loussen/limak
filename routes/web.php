@@ -149,6 +149,7 @@ Route::group([ 'middleware' => ['auth', 'isblocked'], 'namespace' => 'Front\Pane
     Route::post('/user-panel/get-questions', 'QuestionsdddController@getDefaultQuestions');
     Route::post('/user-panel/get-question', 'QuestionsdddController@getDefaultQuestion');
     Route::get('/user-panel/get-max-step', 'QuestionsdddController@getMaxStepQuestions');
+//    Route::post('/user-panel/get-next-step', 'QuestionsdddController@getNextStepQuestions');
 
 
 //    Route::get('user-panel/get-complaints1', 'QuestionsController@getComplaints1');

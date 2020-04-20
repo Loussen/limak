@@ -311,5 +311,6 @@ return [
     'updated' => "Düzəliş edildi",
     'payment_from_azn' => 'AZN balansından ödəniş etməyə əminsinizmi?',
     'returns' => 'İade',
+    'asistant' => 'Asistant',
 
 ];

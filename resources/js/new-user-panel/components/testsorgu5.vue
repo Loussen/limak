@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12 courier-log">
                 <div class="block col-xs-12 questions-request" id="assistant-manager">
-                    <h3>{{ ExWindow && ExWindow.translator('panel-errors.requests') }}</h3>
+                    <h3>Limak {{ ExWindow && ExWindow.translator('panel-errors.asistant') }}</h3>
                     <div class="answer-questions" v-for="n in k" v-if="waitQuestions[n] === true">
                         <div class="questions">
                             <div class="question-bubble-title"
@@ -26,9 +26,9 @@
                             </div>
 
 
-                            <div v-show="checkAnswer[n] === true">
+                            <div v-show="checkAnswer[n] === true && n<maxStep || checkOther == 1">
                                 <div>
-                                    <span class="nope" v-on:click="getQuestions(2,{id: 0})"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>
+                                    <span class="nope" v-on:click="getQuestions(step,{id: 0}, true)"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>
                                 </div>
                             </div>
 
@@ -78,16 +78,21 @@
             this.initialize();
             this.ExWindow = window;
             this.getQuestions(1,{id : 0});
+            this.getMaxStep();
+            // this.getNextStepQuestionId();
         },
         data: function () {
             return {
                 ExWindow: null,
                 lang: null,
                 k: 1,
+                step: 2,
                 maxStep: 1,
                 questions: [],
                 checkAnswer: [],
+                checkOther: null,
                 checkTitle: [],
+                nextQuestionId: [],
                 selectedQuestion: [],
                 waitQuestions: [],
                 waitSelectedQuestion: []
@@ -97,13 +102,14 @@
             initialize() {
                 this.lang = window.translator;
             },
-            getQuestions(step = 1, item) {
+            getQuestions(step = 1, item, stepInc = false) {
                 axios.post('/user-panel/get-questions/', {lang: default_locale, step: step, id: item.id})
                     .then(data => {
                         let response = data.data.data;
                         let checkChild = data.data.checkChild;
+                        this.checkOther = data.data.checkOther;
 
-                        if(checkChild !== null)
+                        if(checkChild !== null || this.checkOther !== null)
                         {
                             this.$set(this.checkAnswer, this.k, false);
                         }
@@ -115,7 +121,16 @@
                         this.questions[this.k] = response;
 
                         // Selected questions
-                        this.selectedQuestion[this.k] = item.result;
+                        if(stepInc === false)
+                        {
+                            this.selectedQuestion[this.k] = item.result;
+                        }
+                        else
+                        {
+                            this.selectedQuestion[this.k] = "Digər";
+                            this.step++;
+                        }
+
                         if(typeof this.selectedQuestion[this.k] !== 'undefined')
                         {
                             if(this.selectedQuestion[this.k].length > 0)
@@ -144,7 +159,25 @@
                     .catch(err => {
                         console.log(err);
                     });
-            }
+            },
+            getMaxStep() {
+                axios.get('/user-panel/get-max-step/')
+                    .then(data => {
+                        this.maxStep = data.data.data;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+            // getNextStepQuestionId() {
+            //     axios.post('/user-panel/get-next-step/', {step: this.step})
+            //         .then(data => {
+            //             this.nextQuestionId[this.k] = data.data.data;
+            //         })
+            //         .catch(err => {
+            //            console.log(err);
+            //         });
+            // }
         },
 
     }

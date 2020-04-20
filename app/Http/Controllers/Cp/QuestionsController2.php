@@ -105,19 +105,28 @@ class QuestionsController2 extends Controller
         $findQuestion->updated_at = date("Y-m-d H:i:s");
         $findQuestion->update();
 
-        // AZ
-        $questionTranslate = QuestionsTranslate::where('questions_id', '=' , (int)$request->question_id)->where('locale', '=', 'az')->firstOrFail();
-        $questionTranslate->value = $request->question_az;
-        $questionTranslate->answer = $request->answer_az;
-        $questionTranslate->updated_at = date("Y-m-d H:i:s");
-        $questionTranslate->update();
+        $findQuestionTranslateAz = QuestionsTranslate::where('questions_id', '=' , (int)$findQuestion->id)->where('locale', '=', 'az')->first();
+        $findQuestionTranslateRu = QuestionsTranslate::where('questions_id', '=' , (int)$findQuestion->id)->where('locale', '=', 'ru')->first();
 
-        // RU
-        $questionTranslate = QuestionsTranslate::where('questions_id', '=' , (int)$request->question_id)->where('locale', '=', 'ru')->firstOrFail();
-        $questionTranslate->value = $request->question_ru;
-        $questionTranslate->answer = $request->answer_ru;
-        $questionTranslate->updated_at = date("Y-m-d H:i:s");
-        $questionTranslate->update();
+        if($findQuestionTranslateAz)
+        {
+            // AZ
+            $questionTranslate = QuestionsTranslate::where('questions_id', '=', (int)$request->question_id)->where('locale', '=', 'az')->firstOrFail();
+            $questionTranslate->value = $request->question_az;
+            $questionTranslate->answer = $request->answer_az;
+            $questionTranslate->updated_at = date("Y-m-d H:i:s");
+            $questionTranslate->update();
+        }
+
+        if($findQuestionTranslateRu)
+        {
+            // RU
+            $questionTranslate = QuestionsTranslate::where('questions_id', '=' , (int)$request->question_id)->where('locale', '=', 'ru')->firstOrFail();
+            $questionTranslate->value = $request->question_ru;
+            $questionTranslate->answer = $request->answer_ru;
+            $questionTranslate->updated_at = date("Y-m-d H:i:s");
+            $questionTranslate->update();
+        }
 
         return response()->json([
             'status' => 200,
