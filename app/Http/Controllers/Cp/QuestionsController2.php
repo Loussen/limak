@@ -17,7 +17,7 @@ class QuestionsController2 extends Controller
      */
     public function getList (Request $request)
     {
-        $per_page = 5;
+        $per_page = 10;
         $data = DB::table('questions as q')
             ->select('*','qpt.value as p_value','q.step as q_step')
             ->leftJoin('questions as p', function ($join) {
@@ -56,6 +56,7 @@ class QuestionsController2 extends Controller
         $model = new Questions();
         $step = $request->step;
         $model->step = $step;
+        $model->ordering = $request->ordering;
         $model->p_id = $request->parent;
         $model->title_id = $request->title_id;
         $model->type = $request->type;
@@ -99,6 +100,7 @@ class QuestionsController2 extends Controller
         $findQuestion = Questions::findOrFail((int)$request->question_id);
         $step = $request->step;
         $findQuestion->step = $step;
+        $findQuestion->ordering = $request->ordering;
         $findQuestion->p_id = $request->parent;
         $findQuestion->title_id = $request->title_id;
         $findQuestion->type = $request->type;

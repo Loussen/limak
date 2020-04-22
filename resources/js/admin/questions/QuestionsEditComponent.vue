@@ -23,9 +23,10 @@
                 </ul>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <select v-model="selected_type" class="form-control">
+                        <label for="type" class="col-form-label">Tip</label>
+                        <select id="type" v-model="selected_type" class="form-control">
                             <option disabled value="">Sualın tipini seçin *...</option>
-                            <option value="1" :selected="selected_type == 1">Ancaq sual</option>
+                            <option value="1" :selected="selected_type == 1">Ancaq sual (Bu sualın alt sualı olmalıdır, əlavə etməyi unutma)</option>
                             <option value="2" :selected="selected_type == 2">Sual və cavab</option>
                         </select>
                         <p style="color:red;" v-if="errors[3]">{{errors[3].selected_type}}</p>
@@ -33,7 +34,8 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <select v-model="selected_parent" class="form-control">
+                        <label for="parent" class="col-form-label">Ana sual</label>
+                        <select id="parent" v-model="selected_parent" class="form-control">
                             <option value="0">Ana sualı seçin...</option>
                             <option v-for="(item,index) in parentList" :selected="item.questions_id == selected_parent" :value="item.questions_id">{{item.value}}</option>
                         </select>
@@ -41,7 +43,8 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <select v-model="selected_title" class="form-control">
+                        <label for="title" class="col-form-label">Başlıq</label>
+                        <select id="title" v-model="selected_title" class="form-control">
                             <option value="0">Başlıq seçin...</option>
                             <option v-for="(item,index) in titleList" :selected="item.id == selected_title" :value="item.id">{{item.name_az}}</option>
                         </select>
@@ -50,14 +53,17 @@
                 <template v-if="lang === 'az'">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Sual" v-model="question_az">
+                            <label for="question_az" class="col-form-label">Sual (AZ)</label>
+                            <input id="question_az" type="text" class="form-control" placeholder="Sual (AZ)" v-model="question_az">
                             <p style="color:red;" v-if="errors[0]">{{errors[0].question_az}}</p>
                         </div>
                     </div>
                     <div class="col-md-12" v-if="selected_type != 1">
                         <div class="form-group">
     <!--                        <input type="text" class="form-control" placeholder="Cavab" v-model="answer">-->
+                            <label for="answer_az" class="col-form-label">Cavab (AZ)</label>
                             <vue-ckeditor
+                                    id="answer_az"
                                     v-model="answer_az"
                                     :config="config"/>
                             <p style="color:red;" v-if="errors[1]">{{errors[1].answer_az}}</p>
@@ -68,14 +74,17 @@
                 <template v-if="lang === 'ru'">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Sual" v-model="question_ru">
+                            <label for="question_ru" class="col-form-label">Sual (RU)</label>
+                            <input id="question_ru" type="text" class="form-control" placeholder="Sual (RU)" v-model="question_ru">
                             <p style="color:red;" v-if="errors[0]">{{errors[0].question_ru}}</p>
                         </div>
                     </div>
                     <div class="col-md-12" v-if="selected_type != 1">
                         <div class="form-group">
                             <!--                        <input type="text" class="form-control" placeholder="Cavab" v-model="answer">-->
+                            <label for="answer_ru" class="col-form-label">Cavab (RU)</label>
                             <vue-ckeditor
+                                    id="answer_ru"
                                     v-model="answer_ru"
                                     :config="config"/>
                             <p style="color:red;" v-if="errors[1]">{{errors[1].answer_ru}}</p>
@@ -85,8 +94,16 @@
                 </template>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Step" v-model="step">
+                        <label for="step" class="col-form-label">Step</label>
+                        <input id="step" type="text" class="form-control" placeholder="Step" v-model="step">
                         <p style="color:red;" v-if="errors[2]">{{errors[2].step}}</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="ordering" class="col-form-label">Sıra</label>
+                        <input id="ordering" type="text" class="form-control" placeholder="Sıra" v-model="ordering">
+                        <p style="color:red;" v-if="errors[4]">{{errors[4].ordering}}</p>
                     </div>
                 </div>
                 <div class="col-md-3 button-last text-left">
@@ -121,6 +138,7 @@
                 answer_az: null,
                 answer_ru: null,
                 step: 1,
+                ordering: 1,
                 selected_parent: 0,
                 selected_title: 0,
                 selected_type: 0,
@@ -145,6 +163,7 @@
                     formData.append('answer_az', this.answer_az);
                     formData.append('answer_ru', this.answer_ru);
                     formData.append('step', this.step);
+                    formData.append('ordering', this.ordering);
                     formData.append('question_id', this.question_id);
                     formData.append('type', this.selected_type);
                     formData.append('parent', this.selected_parent);
@@ -161,6 +180,8 @@
                                 'success'
                             );
 
+                            console.log(this.answer_az+" Cavab");
+
                             // this.question_az = null;
                             // this.question_ru = null;
                             // this.answer_az = this.answer_ru = '';
@@ -173,7 +194,7 @@
                                 'error'
                             )
                         }
-                        console.log(data)
+                        // console.log(data)
                         // this.getComplaints();
                     })
                 }
@@ -183,6 +204,7 @@
                 if(!this.question_az) this.errors[0]={question_az:"Sual boş ola bilməz."};
                 if(!this.answer_az) this.errors[1]={answer_az:"Cavab boş ola bilməz."};
                 if(this.step <= 0) this.errors[2]={step:"Step boş ola bilməz."};
+                if(this.ordering <= 0) this.errors[4]={step:"Sıralama boş ola bilməz."};
                 return (this.errors.length===0 ? 'true' : 'false');
             },
 
@@ -205,6 +227,7 @@
                         this.question_az = list['az']['value'];
                         this.answer_az = list['az']['answer'];
                         this.step = list['az']['step'];
+                        this.ordering = list['az']['ordering'];
                         this.question_id = list['az']['questions_id'];
                         this.selected_type = list['az']['type'];
                         this.selected_parent = list['az']['p_id'];

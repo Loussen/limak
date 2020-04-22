@@ -26,9 +26,9 @@
                             </div>
 
 
-                            <div v-show="checkAnswer[n] === true && n<maxStep || checkOther == 1">
+                            <div v-show="/*checkAnswer[n] === true && n<maxStep || checkOther == 1*/ n==1">
                                 <div>
-                                    <span class="nope" v-on:click="getQuestions(step,{id: 0}, true)"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>
+                                    <span class="nope" v-on:click="getQuestions(10000,{id: 0},true)"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>
                                 </div>
                             </div>
 
@@ -86,7 +86,7 @@
                 ExWindow: null,
                 lang: null,
                 k: 1,
-                step: 2,
+                // step: 2,
                 maxStep: 1,
                 questions: [],
                 checkAnswer: [],
@@ -128,7 +128,7 @@
                         else
                         {
                             this.selectedQuestion[this.k] = "Digər";
-                            this.step++;
+                            // this.step++;
                         }
 
                         if(typeof this.selectedQuestion[this.k] !== 'undefined')

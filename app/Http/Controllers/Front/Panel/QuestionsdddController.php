@@ -54,16 +54,33 @@ class QuestionsdddController extends Controller
         }
         else
         {
-            $data = DB::table('questions as q')
-                ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type')
-                ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
-                ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
-                ->where('q.status','1')
-                ->where('q.step',$step)
-                ->where('q.p_id',0)
-                ->where('qt.locale',$lang)
-                ->orderBy('q.ordering', 'ASC')
-                ->get();
+            if($step == 10000)
+            {
+                $data = DB::table('questions as q')
+                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type')
+                    ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
+                    ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
+                    ->where('q.status','1')
+                    ->where('q.step','>',1)
+                    ->where('q.p_id',0)
+                    ->where('qt.locale',$lang)
+                    ->orderBy('q.ordering', 'ASC')
+                    ->get();
+            }
+            else
+            {
+                $data = DB::table('questions as q')
+                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type')
+                    ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
+                    ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
+                    ->where('q.status','1')
+                    ->where('q.step',$step)
+                    ->where('q.p_id',0)
+                    ->where('qt.locale',$lang)
+                    ->orderBy('q.ordering', 'ASC')
+                    ->get();
+            }
+
 
             $checkOther = true;
         }
