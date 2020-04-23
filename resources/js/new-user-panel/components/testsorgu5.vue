@@ -2,7 +2,7 @@
     <div class="col-md-9 col-sm-11 col-xs-11 offer courier">
         <div class="row">
             <div class="col-xs-12 courier-log">
-                <div class="block col-xs-12 questions-request" id="assistant-manager">
+                <div class="block col-xs-12 questions-request" id="assistant-manager" ref="assistantManager">
                     <h3>Limak {{ ExWindow && ExWindow.translator('panel-errors.asistant') }}</h3>
                     <div class="answer-questions" v-for="n in k" v-if="waitQuestions[n] === true">
                         <div class="questions">
@@ -18,7 +18,7 @@
                                       v-on:click="getQuestions(1,item)">
                                     {{item.result}}
                                 </span>
-                                <span class="question-bubble" style="cursor: initial;"
+                                <span class="question-bubble-answer" style="cursor: initial;"
                                       v-show="checkAnswer[n] === true && n!=1"
                                       v-for="(item,index) in questions[n]"
                                       v-html="item.result"
@@ -56,6 +56,7 @@
                         </div>
 
                     </div>
+                    <div id="scrollTo"></div>
 
 <!--                    <div class="alert alert-success" role="alert">Sorguda ishtirak etdiyiniz uchun teshekkurler!</div>-->
 <!--                    <div class="alert alert-warning" role="alert">Diger suallar uchun sorgu gondere bilersiniz</div>-->
@@ -74,11 +75,15 @@
 
         name: "Questions",
 
+        updated () {
+            this.scrollToEnd();
+        },
         mounted() {
             this.initialize();
             this.ExWindow = window;
             this.getQuestions(1,{id : 0});
             this.getMaxStep();
+            this.scrollToEnd();
             // this.getNextStepQuestionId();
         },
         data: function () {
@@ -101,6 +106,10 @@
         methods: {
             initialize() {
                 this.lang = window.translator;
+            },
+            scrollToEnd () {
+                var content = this.$refs.assistantManager;
+                content.scrollTop = content.scrollHeight;
             },
             getQuestions(step = 1, item, stepInc = false) {
                 axios.post('/user-panel/get-questions/', {lang: default_locale, step: step, id: item.id})
@@ -155,6 +164,14 @@
                         }
 
                         console.log(this.k);
+
+                        // var container = document.getElementById("assistant-manager"),
+                        //     scrollTo = document.getElementById("scrollTo");
+                        //
+                        // container.scrollTop = scrollTo.offsetTop - container.offsetTop + 500;
+
+                        // let objDiv = document.getElementById("assistant-manager");
+                        // objDiv.scrollTop = objDiv.scrollHeight + objDiv.scrollHeight + objDiv.scrollHeight;
                     })
                     .catch(err => {
                         console.log(err);
@@ -193,17 +210,26 @@
     {
         cursor: initial !important;
     }
-    .question-bubble, .question-bubble-title{
+    .question-bubble, .question-bubble-title, .question-bubble-answer{
         border-radius: 20px;
         border: 1px solid #ddd;
         padding: 10px 30px;
         margin-right: 10px;
-        background-color: #efefef;
+        /*background-color: #efefef;*/
         cursor: pointer;
         display: inline-block;
         margin-bottom: 10px;
     }
-    .question-bubble.active
+    .question-bubble-title
+    {
+        border-top-left-radius: 0;
+    }
+    .question-bubble
+    {
+        background-color: #fcfcf7;
+        border: 1px solid #e6e6e6;
+    }
+    .question-bubble:hover
     {
         border: 1px solid #F95631;
         color: #F95631;
@@ -273,6 +299,11 @@
     .questions{
         margin-top: 10px;
     }
+
+    /*.answer-questions*/
+    /*{*/
+    /*    border: 1px solid #F57558;*/
+    /*}*/
 
 
 </style>

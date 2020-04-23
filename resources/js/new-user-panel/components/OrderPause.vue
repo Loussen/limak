@@ -23,10 +23,16 @@
                             <div class="invoice-left-side block">
                                 <div class="left-content text-center">
                                     <div class="row relative">
-                                        <div class="success-left col-sm-6 col-xs-12">
+                                        <div class="suc cess-left col-sm-6 col-xs-12">
                                             <h2>Diqqət!</h2>
                                             <div class="focus">
-                                                <p>"Sifariş et" xidməti bazarertəsi 09:00-dan etibarən aktiv olacaq.</p>
+                                                <p>"Sifariş et" xidməti sabah saat 09:00-dan etibarən aktiv olacaq.
+                                                </p>
+                                                <p>
+                                                    <b>
+                                                        Seçdiyiniz məhsulları özünüz sifariş edib, "Limak" hesabınızda bəyənnamə əlavə edə bilərsiniz.
+                                                    </b>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class=" success-right col-sm-6 col-xs-12">

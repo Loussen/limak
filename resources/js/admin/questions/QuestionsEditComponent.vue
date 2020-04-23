@@ -106,6 +106,13 @@
                         <p style="color:red;" v-if="errors[4]">{{errors[4].ordering}}</p>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="chat_show" class="col-form-label">Crispi linki</label>
+                        <input id="chat_show" type="checkbox" class="form-control" placeholder="Crispi linki görsənsin" v-model="chat_show">
+                        {{chat_show}}
+                    </div>
+                </div>
                 <div class="col-md-3 button-last text-left">
                     <button type="button" class="btn-effect" v-on:click="submit()">Dəyişdir</button>
                 </div>
@@ -133,12 +140,13 @@
         name: "QuestionsAdd",
         data () {
             return {
-                question_az: null,
-                question_ru: null,
-                answer_az: null,
-                answer_ru: null,
+                question_az: '',
+                question_ru: '',
+                answer_az: '',
+                answer_ru: '',
                 step: 1,
                 ordering: 1,
+                chat_show: 2,
                 selected_parent: 0,
                 selected_title: 0,
                 selected_type: 0,
@@ -164,6 +172,7 @@
                     formData.append('answer_ru', this.answer_ru);
                     formData.append('step', this.step);
                     formData.append('ordering', this.ordering);
+                    formData.append('chat_show', this.chat_show);
                     formData.append('question_id', this.question_id);
                     formData.append('type', this.selected_type);
                     formData.append('parent', this.selected_parent);
@@ -202,7 +211,7 @@
             checkForm(){
                 this.errors=[];
                 if(!this.question_az) this.errors[0]={question_az:"Sual boş ola bilməz."};
-                if(!this.answer_az) this.errors[1]={answer_az:"Cavab boş ola bilməz."};
+                if(!this.answer_az && this.selected_type == 2) this.errors[1]={answer_az:"Cavab boş ola bilməz."};
                 if(this.step <= 0) this.errors[2]={step:"Step boş ola bilməz."};
                 if(this.ordering <= 0) this.errors[4]={step:"Sıralama boş ola bilməz."};
                 return (this.errors.length===0 ? 'true' : 'false');
@@ -232,6 +241,12 @@
                         this.selected_type = list['az']['type'];
                         this.selected_parent = list['az']['p_id'];
                         this.selected_title = list['az']['title_id'];
+                        this.chat_show = list['az']['chat_show'];
+
+                        if(this.chat_show == 2)
+                            this.chat_show = false;
+                        else
+                            this.chat_show = true;
                     })
                     .catch(function (error) {
                         console.log(error);

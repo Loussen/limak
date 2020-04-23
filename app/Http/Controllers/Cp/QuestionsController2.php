@@ -19,7 +19,7 @@ class QuestionsController2 extends Controller
     {
         $per_page = 10;
         $data = DB::table('questions as q')
-            ->select('*','qpt.value as p_value','q.step as q_step')
+            ->select('*','qpt.value as p_value','q.step as q_step','q.ordering as q_ordering')
             ->leftJoin('questions as p', function ($join) {
                 $join->on('p.id', '=', 'q.p_id');
                 $join->leftJoin('questions_translates as qpt','p.id','=','qpt.questions_id');
@@ -57,6 +57,7 @@ class QuestionsController2 extends Controller
         $step = $request->step;
         $model->step = $step;
         $model->ordering = $request->ordering;
+        $model->chat_show = $request->chat_show;
         $model->p_id = $request->parent;
         $model->title_id = $request->title_id;
         $model->type = $request->type;
@@ -71,14 +72,14 @@ class QuestionsController2 extends Controller
         $questionTranslate->save();
 
         // RU
-        if( !empty($request->question_ru) && !empty($request->answer_ru) ) {
+//        if( !empty($request->question_ru) && !empty($request->answer_ru) ) {
             $questionTranslate = new QuestionsTranslate();
             $questionTranslate->value = $request->question_ru;
             $questionTranslate->answer = $request->answer_ru;
             $questionTranslate->questions_id = $model->id;
             $questionTranslate->locale = 'ru';
             $questionTranslate->save();
-        }
+//        }
 
         return response()->json([
             'status' => 200,
@@ -101,6 +102,10 @@ class QuestionsController2 extends Controller
         $step = $request->step;
         $findQuestion->step = $step;
         $findQuestion->ordering = $request->ordering;
+//        echo $request->chat_show;
+        $chat_show = $request->chat_show == 'true' ? '1' : '2';
+//        echo $chat_show;
+        $findQuestion->chat_show = $chat_show;
         $findQuestion->p_id = $request->parent;
         $findQuestion->title_id = $request->title_id;
         $findQuestion->type = $request->type;

@@ -106,6 +106,12 @@
                         <p style="color:red;" v-if="errors[4]">{{errors[4].ordering}}</p>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="chat_show" class="col-form-label">Crispi linki</label>
+                        <input type="checkbox" class="form-control" id="chat_show" placeholder="Crispi linki görsənsin" v-model="chat_show">
+                    </div>
+                </div>
                 <div class="col-md-3 button-last text-left">
                     <button type="button" class="btn-effect" v-on:click="submit()">Əlavə et</button>
                 </div>
@@ -133,12 +139,13 @@
         name: "QuestionsAdd",
         data () {
             return {
-                question_az: null,
-                question_ru: null,
-                answer_az: null,
-                answer_ru: null,
+                question_az: '',
+                question_ru: '',
+                answer_az: '',
+                answer_ru: '',
                 step: 1,
                 ordering: 1,
+                chat_show: false,
                 selected_parent: 0,
                 selected_title: 0,
                 selected_type: '',
@@ -164,6 +171,9 @@
                     formData.append('parent', this.selected_parent);
                     formData.append('title_id', this.selected_title);
                     formData.append('type', this.selected_type);
+                    formData.append('chat_show', this.chat_show);
+
+                    console.log(this.selected_type+" type");
 
                     axios.post('/cp/questionsAdd',
                         formData,
@@ -178,8 +188,8 @@
 
                             console.log(this.answer_az+" Cavab");
 
-                            this.question_az = null;
-                            this.question_ru = null;
+                            this.question_az = '';
+                            this.question_ru = '';
                             this.answer_az = this.answer_ru = '';
                         }
                         else
@@ -198,7 +208,7 @@
             checkForm(){
                 this.errors=[];
                 if(!this.question_az) this.errors[0]={question_az:"Sual boş ola bilməz."};
-                // if(!this.answer_az) this.errors[1]={answer_az:"Cavab boş ola bilməz."};
+                if(!this.answer_az && this.selected_type == 2) this.errors[1]={answer_az:"Cavab boş ola bilməz."};
                 if(this.step <= 0) this.errors[2]={step:"Step boş ola bilməz."};
                 if(this.ordering <= 0) this.errors[4]={ordering:"Sıralama boş ola bilməz."};
                 if(this.selected_type <= 0) this.errors[3]={selected_type:"Tip boş ola bilməz."};

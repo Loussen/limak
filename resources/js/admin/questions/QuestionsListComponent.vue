@@ -27,6 +27,7 @@
                         <th>Ana sual</th>
                         <th>Başlıq</th>
                         <th>Step</th>
+                        <th>Sıra</th>
                         <th>Redaktə</th>
                     </tr>
                     </thead>
@@ -39,6 +40,7 @@
                         <td v-html="questions.p_value"></td>
                         <td v-html="questions.name_az"></td>
                         <td> {{ questions.q_step }}</td>
+                        <td> {{ questions.q_ordering }}</td>
                         <td>
 <!--                            <a href="#" class="btn btn-primary a-btn-slide-text">-->
 <!--                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>-->
