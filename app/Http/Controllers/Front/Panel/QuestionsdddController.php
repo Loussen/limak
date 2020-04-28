@@ -28,7 +28,7 @@ class QuestionsdddController extends Controller
             if($checkChildQuestions !== null)
             {
                 $data = DB::table('questions as q')
-                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type')
+                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type','q.chat_show')
                     ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
                     ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
                     ->where('q.status','1')
@@ -41,7 +41,7 @@ class QuestionsdddController extends Controller
             else
             {
                 $data = DB::table('questions as q')
-                    ->select('qt.answer as result','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type')
+                    ->select('qt.answer as result','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type','q.chat_show')
                     ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
                     ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
                     ->where('q.status','1')
@@ -57,7 +57,7 @@ class QuestionsdddController extends Controller
             if($step == 10000)
             {
                 $data = DB::table('questions as q')
-                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type')
+                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type','q.chat_show')
                     ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
                     ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
                     ->where('q.status','1')
@@ -70,7 +70,7 @@ class QuestionsdddController extends Controller
             else
             {
                 $data = DB::table('questions as q')
-                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type')
+                    ->select('qt.value as result','qt.answer','qt.questions_id','q.id','titles.name_'.$lang.' as title_name','q.type','q.chat_show')
                     ->leftJoin('questions_translates as qt','q.id','=','qt.questions_id')
                     ->leftJoin('questions_titles as titles','q.title_id','=','titles.id')
                     ->where('q.status','1')

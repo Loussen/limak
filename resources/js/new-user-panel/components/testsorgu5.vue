@@ -11,26 +11,34 @@
                                 {{questions[n][0].title_name}}
                             </div>
 
+
                             <div>
                                 <span class="question-bubble"
                                       v-show="checkAnswer[n] === false || n==1"
                                       v-for="(item,index) in questions[n]"
                                       v-on:click="getQuestions(1,item)">
                                     {{item.result}}
+                                    {{item.chat_show}}
                                 </span>
                                 <span class="question-bubble-answer" style="cursor: initial;"
                                       v-show="checkAnswer[n] === true && n!=1"
                                       v-for="(item,index) in questions[n]"
                                       v-html="item.result"
                                 ></span>
+
+                            </div>
+                            <div v-show="chatShow[n]===true && checkAnswer[n] === true">
+                                <span class="question-bubble-chat">
+                                    <span style="font-size: 15px; margin-right: 5px;">&#x26A1;</span> Chata qoşul
+                                </span>
                             </div>
 
 
-                            <div v-show="/*checkAnswer[n] === true && n<maxStep || checkOther == 1*/ n==1">
-                                <div>
-                                    <span class="nope" v-on:click="getQuestions(10000,{id: 0},true)"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>
-                                </div>
-                            </div>
+<!--                            <div v-show="/*checkAnswer[n] === true && n<maxStep || checkOther == 1*/ n==1">-->
+<!--                                <div>-->
+<!--                                    <span class="nope" v-on:click="getQuestions(10000,{id: 0},true)"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Bashqa sual vermek isteyirsiniz?</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                         </div>
 
@@ -58,8 +66,14 @@
                     </div>
                     <div id="scrollTo"></div>
 
+                    <div class="nope-div" v-show="checkAnswerNope === true">
+                        <button type="button" v-on:click="getQuestions(1,{id : 0}, true)" class="mt-auto btn btn-lg btn-outline-primary nope"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Başqa sual vermək istəyirsiniz?</button>
+                    </div>
+
 <!--                    <div class="alert alert-success" role="alert">Sorguda ishtirak etdiyiniz uchun teshekkurler!</div>-->
 <!--                    <div class="alert alert-warning" role="alert">Diger suallar uchun sorgu gondere bilersiniz</div>-->
+
+
                 </div>
             </div>
         </div>
@@ -76,14 +90,16 @@
         name: "Questions",
 
         updated () {
-            this.scrollToEnd();
+            // this.scrollToEnd();
+            // this.scrollToDiv();
         },
         mounted() {
             this.initialize();
             this.ExWindow = window;
             this.getQuestions(1,{id : 0});
             this.getMaxStep();
-            this.scrollToEnd();
+            // this.scrollToEnd();
+            // this.scrollToDiv();
             // this.getNextStepQuestionId();
         },
         data: function () {
@@ -95,12 +111,14 @@
                 maxStep: 1,
                 questions: [],
                 checkAnswer: [],
+                checkAnswerNope: false,
                 checkOther: null,
                 checkTitle: [],
                 nextQuestionId: [],
                 selectedQuestion: [],
                 waitQuestions: [],
-                waitSelectedQuestion: []
+                waitSelectedQuestion: [],
+                chatShow: []
             }
         },
         methods: {
@@ -111,6 +129,42 @@
                 var content = this.$refs.assistantManager;
                 content.scrollTop = content.scrollHeight;
             },
+            scrollToSmoothly (pos, time){
+                /*Time is only applicable for scrolling upwards*/
+                /*Code written by hev1*/
+                /*pos is the y-position to scroll to (in pixels)*/
+                if(isNaN(pos)){
+                    throw "Position must be a number";
+                }
+                if(pos<0){
+                    throw "Position can not be negative";
+                }
+                var currentPos = window.scrollY||window.screenTop;
+                if(currentPos<pos){
+                    var t = 10;
+                    for(let i = currentPos; i <= pos; i+=10){
+                        t+=10;
+                        setTimeout(function(){
+                            window.scrollTo(0, i);
+                        }, t/2);
+                    }
+                } else {
+                    time = time || 2;
+                    var i = currentPos;
+                    var x;
+                    x = setInterval(function(){
+                        window.scrollTo(0, i);
+                        i -= 10;
+                        if(i<=pos){
+                            clearInterval(x);
+                        }
+                    }, time);
+                }
+            },
+            scrollToDiv(){
+                var elem = document.querySelector("#scrollTo");
+                this.scrollToSmoothly(elem.offsetTop);
+            },
             getQuestions(step = 1, item, stepInc = false) {
                 axios.post('/user-panel/get-questions/', {lang: default_locale, step: step, id: item.id})
                     .then(data => {
@@ -120,10 +174,12 @@
 
                         if(checkChild !== null || this.checkOther !== null)
                         {
+                            this.checkAnswerNope = false;
                             this.$set(this.checkAnswer, this.k, false);
                         }
                         else
                         {
+                            this.checkAnswerNope = true;
                             this.$set(this.checkAnswer, this.k, true);
                         }
 
@@ -155,6 +211,11 @@
                             this.checkTitle[this.k] = true;
                         }
 
+                        for(var i=0; i < response.length; i++)
+                        {
+                            this.checkChatShow(response[i].chat_show)
+                        }
+
                         // Wait Questions load
                         if(this.questions[this.k].length > 0)
                         {
@@ -163,7 +224,11 @@
                             this.k++;
                         }
 
-                        console.log(this.k);
+                        console.log(response);
+
+                        $("#assistant-manager").animate({ scrollTop: $('#assistant-manager').prop("scrollHeight")}, 500);
+
+                        // this.scrollToDiv();
 
                         // var container = document.getElementById("assistant-manager"),
                         //     scrollTo = document.getElementById("scrollTo");
@@ -186,6 +251,12 @@
                         console.log(err);
                     });
             },
+            checkChatShow(item){
+                if(item == 1)
+                    this.$set(this.chatShow, this.k, true);
+                else
+                    this.$set(this.chatShow, this.k, false);
+            }
             // getNextStepQuestionId() {
             //     axios.post('/user-panel/get-next-step/', {step: this.step})
             //         .then(data => {
@@ -210,7 +281,7 @@
     {
         cursor: initial !important;
     }
-    .question-bubble, .question-bubble-title, .question-bubble-answer{
+    .question-bubble, .question-bubble-title, .question-bubble-answer, .question-bubble-chat{
         border-radius: 20px;
         border: 1px solid #ddd;
         padding: 10px 30px;
@@ -233,6 +304,11 @@
     {
         border: 1px solid #F95631;
         color: #F95631;
+    }
+    .question-bubble-chat:hover
+    {
+        border: 1px solid #058fff;
+        color: #058fff;
     }
     .selected-question{
         float: right;
@@ -260,7 +336,7 @@
         background-color: #efefef;
         border-top-left-radius: 0;
     }
-    .accept-check .yes, .accept-check .no, .questions .nope{
+    .accept-check .yes, .accept-check .no, .questions-request .nope{
         border-radius: 20px;
         padding: 10px 30px 10px 10px;
         margin-right: 10px;
@@ -288,16 +364,24 @@
         background-color: #efefef;
         border-top-left-radius: 0;
     }
-    .questions .nope{
+    .questions-request .nope{
         background-color: #058fff;
         color: #fff;
     }
     .questions-request{
-        max-height: 650px;
+        max-height: 1000px;
         overflow: auto;
     }
     .questions{
         margin-top: 10px;
+    }
+
+    .nope-div
+    {
+        text-align: center;
+        margin-top: 15px;
+        border-top: 1px solid #e6e6e6;
+        padding-top: 10px;
     }
 
     /*.answer-questions*/

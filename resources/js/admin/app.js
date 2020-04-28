@@ -101,6 +101,8 @@ import QuestionsTitleList from './questions_title/QuestionsTitleListComponent'
 import QuestionsTitleAdd from './questions_title/QuestionsTitleAddComponent'
 import QuestionsTitleEdit from './questions_title/QuestionsTitleEditComponent'
 
+import Settings from './users/Settings'
+
 const routes = [
     { path: '/accountant', component: Accountant },
     { path: '/accountant/account/logs/:id', component: AccountantAccountLogs },
@@ -206,6 +208,7 @@ const routes = [
     { path: '/questions_title/add', component: QuestionsTitleAdd},
     { path: '/questions_title/edit/:id', component: QuestionsTitleEdit },
     { path: '/asistant-management', component: AsistantManagement },
+    { path: '/settings', component: Settings},
 
 ]
 

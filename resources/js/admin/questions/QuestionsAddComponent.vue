@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <label for="type" class="col-form-label">Tip</label>
                         <select id="type" v-model="selected_type" class="form-control">
-                            <option disabled selected value="">Sualın tipini seçin *...</option>
+                            <option disabled selected value="">Sualın tipini seçin* ...</option>
                             <option value="1">Ancaq sual (Bu sualın alt sualı olmalıdır, əlavə etməyi unutma)</option>
                             <option value="2">Sual və cavab</option>
                         </select>
@@ -41,7 +41,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-12" v-if="selected_type != 2">
+                <div class="col-md-12" v-show="selected_type != 2">
                     <div class="form-group">
                         <label for="title" class="col-form-label">Başlıq</label>
                         <select id="title" v-model="selected_title" class="form-control">
@@ -50,7 +50,7 @@
                         </select>
                     </div>
                 </div>
-                <template v-if="lang === 'az'">
+                <div v-show="lang === 'az'">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="question_az" class="col-form-label">Sual (AZ)</label>
@@ -58,7 +58,7 @@
                             <p style="color:red;" v-if="errors[0]">{{errors[0].question_az}}</p>
                         </div>
                     </div>
-                    <div class="col-md-12" v-if="selected_type != 1">
+                    <div class="col-md-12" v-show="selected_type != 1">
                         <div class="form-group">
                             <label for="answer_az" class="col-form-label">Cavab (AZ)</label>
     <!--                        <input type="text" class="form-control" placeholder="Cavab" v-model="answer">-->
@@ -67,11 +67,10 @@
                                     v-model="answer_az"
                                     :config="config"/>
                             <p style="color:red;" v-if="errors[1]">{{errors[1].answer_az}}</p>
-
                         </div>
                     </div>
-                </template>
-                <template v-if="lang === 'ru'">
+                </div>
+                <div v-show="lang === 'ru'">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="question_ru" class="col-form-label">Sual (RU)</label>
@@ -79,7 +78,7 @@
                             <p style="color:red;" v-if="errors[0]">{{errors[0].question_ru}}</p>
                         </div>
                     </div>
-                    <div class="col-md-12" v-if="selected_type != 1">
+                    <div class="col-md-12" v-show="selected_type != 1">
                         <div class="form-group">
                             <label for="answer_ru" class="col-form-label">Cavab (RU)</label>
                             <!--                        <input type="text" class="form-control" placeholder="Cavab" v-model="answer">-->
@@ -87,12 +86,13 @@
                                     id="answer_ru"
                                     v-model="answer_ru"
                                     :config="config"/>
+
                             <p style="color:red;" v-if="errors[1]">{{errors[1].answer_ru}}</p>
 
                         </div>
                     </div>
-                </template>
-                <div class="col-md-12">
+                </div>
+                <div class="col-md-12" style="display: none;">
                     <div class="form-group">
                         <label for="step" class="col-form-label">Step</label>
                         <input type="text" class="form-control" id="step" placeholder="Step" v-model="step">
@@ -125,7 +125,7 @@
 
     import VueCkeditor from 'vue-ckeditor2';
 
-    import swal from 'sweetalert2'
+    import swal from 'sweetalert2';
 
     window.axios = require('axios');
     let token = document.head.querySelector('meta[name="csrf-token"]');
@@ -137,6 +137,10 @@
     }
     export default {
         name: "QuestionsAdd",
+        components: {
+            'vue-ckeditor': VueCkeditor
+        },
+        mixins: [auth],
         data () {
             return {
                 question_az: '',
@@ -190,7 +194,8 @@
 
                             this.question_az = '';
                             this.question_ru = '';
-                            this.answer_az = this.answer_ru = '';
+                            this.answer_az = '';
+                            this.answer_ru = '';
                         }
                         else
                         {
@@ -237,17 +242,11 @@
         mounted(){
             this.getParentsQuestions();
             this.getTitles();
-            if (document.getElementById('ckeditor')) return; // was already loaded
-            console.log("ckeditor");
-            let scriptTag = document.createElement("script");
-            scriptTag.src = "https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js";
-            scriptTag.id = "ckeditor";
-            document.getElementsByTagName('head')[0].appendChild(scriptTag);
+            // let scriptTag = document.createElement("script");
+            // scriptTag.src = "https://cdn.ckeditor.com/4.11.3/standard/ckeditor.js";
+            // scriptTag.id = "ckeditor";
+            // document.getElementsByTagName('head')[0].appendChild(scriptTag);
         },
-        components: {
-            'vue-ckeditor': VueCkeditor
-        },
-        mixins: [auth]
     }
 </script>
 
