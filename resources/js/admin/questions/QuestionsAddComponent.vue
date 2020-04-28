@@ -106,10 +106,10 @@
                         <p style="color:red;" v-if="errors[4]">{{errors[4].ordering}}</p>
                     </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" v-show="selected_type != 1">
                     <div class="form-group">
                         <label for="chat_show" class="col-form-label">Crispi linki</label>
-                        <input type="checkbox" class="form-control" id="chat_show" placeholder="Crispi linki görsənsin" v-model="chat_show">
+                        <input type="checkbox" class="form-control" id="chat_show" placeholder="Crispi linki görsənsin">
                     </div>
                 </div>
                 <div class="col-md-3 button-last text-left">
@@ -149,7 +149,7 @@
                 answer_ru: '',
                 step: 1,
                 ordering: 1,
-                chat_show: false,
+                chat_show: 2,
                 selected_parent: 0,
                 selected_title: 0,
                 selected_type: '',

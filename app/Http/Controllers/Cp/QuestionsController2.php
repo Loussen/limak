@@ -19,7 +19,7 @@ class QuestionsController2 extends Controller
     {
         $per_page = 10;
         $data = DB::table('questions as q')
-            ->select('*','qpt.value as p_value','q.step as q_step','q.ordering as q_ordering')
+            ->select('*','qpt.value as p_value','q.step as q_step','q.ordering as q_ordering','q.chat_show as q_chat_show','q.type as q_type')
             ->leftJoin('questions as p', function ($join) {
                 $join->on('p.id', '=', 'q.p_id');
                 $join->leftJoin('questions_translates as qpt','p.id','=','qpt.questions_id');

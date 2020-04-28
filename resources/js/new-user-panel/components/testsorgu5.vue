@@ -18,7 +18,6 @@
                                       v-for="(item,index) in questions[n]"
                                       v-on:click="getQuestions(1,item)">
                                     {{item.result}}
-                                    {{item.chat_show}}
                                 </span>
                                 <span class="question-bubble-answer" style="cursor: initial;"
                                       v-show="checkAnswer[n] === true && n!=1"
