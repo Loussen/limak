@@ -27,7 +27,7 @@
 
                             </div>
                             <div v-show="chatShow[n]===true && checkAnswer[n] === true">
-                                <span class="question-bubble-chat">
+                                <span class="question-bubble-chat" onclick="$crisp.push(['do', 'chat:open'])">
                                     <span style="font-size: 15px; margin-right: 5px;">&#x26A1;</span> Chata qoşul
                                 </span>
                             </div>
@@ -66,7 +66,7 @@
                     <div id="scrollTo"></div>
 
                     <div class="nope-div" v-show="checkAnswerNope === true">
-                        <button type="button" v-on:click="getQuestions(1,{id : 0}, true)" class="mt-auto btn btn-lg btn-outline-primary nope"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Başqa sual vermək istəyirsiniz?</button>
+                        <button type="button" v-on:click="getQuestions(1,{id : 0}, true)" class="mt-auto btn btn-outline-primary nope"><span style="font-size: 15px; margin-right: 5px;">&#128527;</span> Başqa sual vermək istəyirsiniz?</button>
                     </div>
 
 <!--                    <div class="alert alert-success" role="alert">Sorguda ishtirak etdiyiniz uchun teshekkurler!</div>-->
@@ -380,7 +380,7 @@
         text-align: center;
         margin-top: 15px;
         border-top: 1px solid #e6e6e6;
-        padding-top: 10px;
+        padding-top: 20px;
     }
 
     /*.answer-questions*/
